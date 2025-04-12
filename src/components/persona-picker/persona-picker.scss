@@ -12,9 +12,18 @@
   overflow-y: auto;
 
 
+  .log{
+    position: absolute;
+    top: 5%;
+    left: 2%;
+    img{
+      max-height: 70px;
+    }
+  }
+  
   .title {
     font-family: "Space Mono", monospace;
-    font-size: 24px;
+    font-size: 42px;
     margin: 0;
     font-weight: 500;
   }

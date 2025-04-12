@@ -17,10 +17,10 @@
 import { useRef, useState } from "react";
 import "./App.scss";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
-import SidePanel from "./components/side-panel/SidePanel";
 import ControlTray from "./components/control-tray/ControlTray";
-import ExplainerPicker from "./components/explainer-picker/ExplainerPicker";
-import Footer from "./components/footer/Footer";
+import PersonaPicker from "./components/persona-picker/PersonaPicker";
+import { ThemeProvider } from "./components/theme-context/ThemeContext";
+import ThemeSwitcher from "./components/theme-context/ThemeSwitcher";
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY as string;
 if (typeof API_KEY !== "string") {
@@ -36,18 +36,18 @@ function App() {
   return (
     <div className="App">
       <LiveAPIProvider url={uri} apiKey={API_KEY}>
+      <ThemeProvider>
         <div className="streaming-console">
-          <SidePanel />
           <main>
             <div className="main-app-area">
-              <ExplainerPicker />
-              <Footer />
+              <PersonaPicker />
             </div>
             <ControlTray videoRef={videoRef} supportsVideo={false}>
               {/* put your own buttons here */}
             </ControlTray>
           </main>
         </div>
+      </ThemeProvider>
       </LiveAPIProvider>
     </div>
   );
