@@ -18,6 +18,7 @@ import { useRef, useState } from "react";
 import "./App.scss";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
 import SidePanel from "./components/side-panel/SidePanel";
+import { GenList } from "./components/genlist/GenList";
 import ControlTray from "./components/control-tray/ControlTray";
 import ExplainerPicker from "./components/explainer-picker/ExplainerPicker";
 import Footer from "./components/footer/Footer";
@@ -40,8 +41,16 @@ function App() {
           <SidePanel />
           <main>
             <div className="main-app-area">
-              <ExplainerPicker />
-              <Footer />
+              {/* APP goes here */}
+              <GenList />
+              <video
+                className={cn("stream", {
+                  hidden: !videoRef.current || !videoStream,
+                })}
+                ref={videoRef}
+                autoPlay
+                playsInline
+              />
             </div>
             <ControlTray videoRef={videoRef} supportsVideo={false}>
               {/* put your own buttons here */}
