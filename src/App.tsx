@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import "./App.scss";
 import { LiveAPIProvider } from "./contexts/LiveAPIContext";
 import ControlTray from "./components/control-tray/ControlTray";
 import PersonaPicker from "./components/persona-picker/PersonaPicker";
 import { ThemeProvider } from "./components/theme-context/ThemeContext";
-import ThemeSwitcher from "./components/theme-context/ThemeSwitcher";
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY as string;
 if (typeof API_KEY !== "string") {
