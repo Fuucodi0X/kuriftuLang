@@ -20,6 +20,7 @@ import { LiveAPIProvider } from "./contexts/LiveAPIContext";
 import ControlTray from "./components/control-tray/ControlTray";
 import PersonaPicker from "./components/persona-picker/PersonaPicker";
 import { ThemeProvider } from "./components/theme-context/ThemeContext";
+import { BrowserRouter } from "react-router-dom";
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY as string;
 if (typeof API_KEY !== "string") {
@@ -35,18 +36,20 @@ function App() {
   return (
     <div className="App">
       <LiveAPIProvider url={uri} apiKey={API_KEY}>
-      <ThemeProvider>
-        <div className="streaming-console">
-          <main>
-            <div className="main-app-area">
-              <PersonaPicker />
+        <BrowserRouter>
+          <ThemeProvider>
+            <div className="streaming-console">
+              <main>
+                <div className="main-app-area">
+                  <PersonaPicker />
+                </div>
+                <ControlTray videoRef={videoRef} supportsVideo={false}>
+                  {/* put your own buttons here */}
+                </ControlTray>
+              </main>
             </div>
-            <ControlTray videoRef={videoRef} supportsVideo={false}>
-              {/* put your own buttons here */}
-            </ControlTray>
-          </main>
-        </div>
-      </ThemeProvider>
+          </ThemeProvider>
+        </BrowserRouter>
       </LiveAPIProvider>
     </div>
   );

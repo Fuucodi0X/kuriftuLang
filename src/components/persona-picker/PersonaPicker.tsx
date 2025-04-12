@@ -1,25 +1,10 @@
-/**
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import React, { useState } from 'react';
 import { TopicChip } from '../topic-chip/TopicChip';
 import './persona-picker.scss';
 import { useLiveAPIContext } from '../../contexts/LiveAPIContext';
 import { ThemeName } from '../theme-context/Theme';
 import { useTheme } from '../theme-context/ThemeContext';
+import { useSearchParams } from 'react-router-dom';
 
 const PERSONAS: Array<{emoji: any, label: string, theme: ThemeName, persona: string}> = [
   { emoji: '⏱️', label: 'Impatient Idris', theme:'Impatient', persona: 'Idris is extremely impatient and stressed, dining at Kuriftu on a tight 45-minute lunch break. He keeps checking his watch and needs immediate attention to take his order. He requires recommendations for the quickest dishes available and would prefer the bill be brought with his food to save time. His tone is hurried, direct, and potentially curt due to his time pressure.'},
@@ -37,10 +22,13 @@ const PERSONAS: Array<{emoji: any, label: string, theme: ThemeName, persona: str
 
 
 const PersonaPicker: React.FC = () => {
+  const [searchParam, setSearchParam] = useSearchParams()
   const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
   const { applyTheme } = useTheme();
-
   const { client, connect, connected } = useLiveAPIContext();
+
+  const name = searchParam.get('name') ? searchParam.get('name') : 'guest'
+  const lang = searchParam.get('lang') ? searchParam.get('lang') : 'english'
 
   const handleSelection = (persona: string, theme: ThemeName) => {
     applyTheme(theme)
@@ -50,8 +38,10 @@ const PersonaPicker: React.FC = () => {
     if (connected && selectedPersona) {
       client.send([
         {
-          text: `You are a customer with persona ${selectedPersona}. Talk to me as if you are that person 
-          Don't change your style until I ask you to.`,
+          text: `You are a customer with persona ${selectedPersona}. 
+          DO NOT EXPAIN TO ME THE MOOD, JUST TALK TO ME AS IF AM A WAITER AND YOU ARE CUSTOMER. 
+          Don't change your style until I ask you to.
+          ONLY SPEAK WITH ${lang}, DON'T USE ANYOTHER LANGUAGE.`,
         },
       ]);
     }
@@ -66,7 +56,8 @@ const PersonaPicker: React.FC = () => {
           {
             text: `You are a customer with persona ${selectedPersona}. 
             DO NOT EXPAIN TO ME THE MOOD, JUST TALK TO ME AS IF AM A WAITER AND YOU ARE CUSTOMER. 
-            Don't change your style until I ask you to.`,
+            Don't change your style until I ask you to.
+            ONLY SPEAK WITH ${lang}, DON'T USE ANYOTHER LANGUAGE.`,
           },
         ]);
       } catch (error) {
@@ -80,7 +71,8 @@ const PersonaPicker: React.FC = () => {
       <div className="log">
         <img src="/kuriftu.png" alt="logo" />
       </div>
-      <h1 className="title">Kuriftu Lang</h1>
+      <h2 className="section-label">Welcome, {name}</h2>
+      <h1 className="title">Talk to customer</h1>
       
       <div className="section">
         <h2 className="section-label">Personas</h2>
