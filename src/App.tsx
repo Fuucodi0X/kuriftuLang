@@ -21,6 +21,7 @@ import ControlTray from "./components/control-tray/ControlTray";
 import PersonaPicker from "./components/persona-picker/PersonaPicker";
 import { ThemeProvider } from "./components/theme-context/ThemeContext";
 import { BrowserRouter } from "react-router-dom";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const API_KEY = process.env.REACT_APP_GEMINI_API_KEY as string;
 if (typeof API_KEY !== "string") {
@@ -46,6 +47,7 @@ function App() {
                 <ControlTray videoRef={videoRef} supportsVideo={false}>
                   {/* put your own buttons here */}
                 </ControlTray>
+                <SpeedInsights />
               </main>
             </div>
           </ThemeProvider>
